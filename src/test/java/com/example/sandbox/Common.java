@@ -65,6 +65,7 @@ public class Common extends Endpoints {
         return given()
                 .relaxedHTTPSValidation()
                 .contentType("application/json; charset=UTF-8")
+                .auth().none()
                 .body(body)
                 .and()
                 .log().everything()
@@ -99,18 +100,34 @@ public class Common extends Endpoints {
 
     //----------------------------------DELETE----------------------------------
 
-    public Response deleteUrl(String endpoint,Map<String, String> headers,Map<String, String> queryParam){
+    public Response deleteUrl(String endpoint){
 
 
         return given()
                 .relaxedHTTPSValidation()
                 .contentType("application/json; charset=UTF-8")
-                .params(queryParam)
+                .and()
+                .log().everything()
+                .when()
+                .delete(baseUrl+endpoint)
+                .then()
+                .log()
+                .all()
+                .extract().response();
+
+    }
+
+    public Response deleteUrl(String endpoint,Map<String, String> headers){
+
+
+        return given()
+                .relaxedHTTPSValidation()
+                .contentType("application/json; charset=UTF-8")
                 .headers(headers)
                 .and()
                 .log().everything()
                 .when()
-                .put(baseUrl+endpoint)
+                .delete(baseUrl+endpoint)
                 .then()
                 .log()
                 .all()
