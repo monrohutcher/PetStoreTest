@@ -22,6 +22,16 @@ public class TestService extends Common {
         return getUrl(findByStatus, queryParams);
     }
 
+    public Response getPetsByStatus(String status){
+        Map<String, String> queryParams = new TreeMap<>();
+        queryParams.put("status", status);
+        return getUrl(findByStatus, queryParams);
+    }
+
+    public Response getPetsByStatus(){
+        return getUrl(findByStatus);
+    }
+
     private List<Long> getAllPetIds() {
         return JsonPath.parse(this.getPetsByStatus(Arrays.asList("sold","pending","available")).getBody().asString()).read("$[*]['id']");
     }
