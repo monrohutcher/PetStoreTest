@@ -22,32 +22,22 @@ import static com.example.sandbox.util.constans.Tags.SMOKE;
 public class PetLifeCycle extends Common {
 
     TestService testService = new TestService();
-    PetBody testPetBodyObject;
-    String testPetBodyString;
-    PetBody modifiedTestPetBodyObject;
-    String modifiedTestPetBodyString;
-
-    @BeforeTest(description = "description")
-    private void Setup_prepareTestData() {
-        testPetBodyObject = testService.buildPetBody(
-                TestData.NAME,
-                TestData.DEFAULT_ITEM,
-                List.of(TestData.HYDRAIMAGE),
-                Collections.singletonList(TestData.DEFAULT_ITEM),
-                PetStatus.PENDING
-                );
-        testPetBodyString = testService.getJsonStringFromObject(testPetBodyObject);
-
-        modifiedTestPetBodyObject = testService.modifyPetBody(
-                testPetBodyObject.getId(),
-                testPetBodyObject.getName(),
-                testPetBodyObject.getCategory(),
-                testPetBodyObject.getPhotoUrls(),
-                testPetBodyObject.getTags(),
-                PetStatus.AVAILABLE
-        );
-        modifiedTestPetBodyString = testService.getJsonStringFromObject(modifiedTestPetBodyObject);
-    }
+    PetBody testPetBodyObject = testService.buildPetBody(
+            TestData.NAME,
+            TestData.DEFAULT_ITEM,
+            List.of(TestData.HYDRAIMAGE),
+            Collections.singletonList(TestData.DEFAULT_ITEM),
+            PetStatus.PENDING
+    );
+    String testPetBodyString = testService.getJsonStringFromObject(testPetBodyObject);;
+    PetBody modifiedTestPetBodyObject = testService.modifyPetBody(
+            testPetBodyObject.getId(),
+            testPetBodyObject.getName(),
+            testPetBodyObject.getCategory(),
+            testPetBodyObject.getPhotoUrls(),
+            testPetBodyObject.getTags(),
+            PetStatus.AVAILABLE;
+    String modifiedTestPetBodyString = testService.getJsonStringFromObject(modifiedTestPetBodyObject);
 
     @Test(priority = 0, enabled = true, groups = {SMOKE, REGRESSION},description ="description")
     public void Test_PostNewPetToStore(){
