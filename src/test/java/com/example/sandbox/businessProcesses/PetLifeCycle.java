@@ -36,10 +36,10 @@ public class PetLifeCycle extends Common {
             testPetBodyObject.getCategory(),
             testPetBodyObject.getPhotoUrls(),
             testPetBodyObject.getTags(),
-            PetStatus.AVAILABLE;
+            PetStatus.AVAILABLE);
     String modifiedTestPetBodyString = testService.getJsonStringFromObject(modifiedTestPetBodyObject);
 
-    @Test(priority = 0, enabled = true, groups = {SMOKE, REGRESSION},description ="description")
+    @Test(priority = 0, enabled = true, groups = {SMOKE, REGRESSION},description ="Test for POST /pet call to create new pet entity")
     public void Test_PostNewPetToStore(){
         Response response = postUrl(newPet, testPetBodyString);
 
@@ -50,7 +50,7 @@ public class PetLifeCycle extends Common {
         Assert.assertEquals(retrievedPetDetails, testPetBodyString, "Invalid pet details returned");
     }
 
-    @Test(priority = 2, enabled = true,groups = {SMOKE, REGRESSION},description ="description")
+    @Test(priority = 1, enabled = true,groups = {SMOKE, REGRESSION},description ="Test for PUT /pet call to modify already created pet entity")
     public void Test_PutUpdatePet(){
         Response response = putUrl(newPet, modifiedTestPetBodyString);
 
@@ -62,7 +62,7 @@ public class PetLifeCycle extends Common {
 
     }
 
-    @Test(priority = 4, enabled = true,groups = {SMOKE, REGRESSION},description ="description")
+    @Test(priority = 2, enabled = true,groups = {SMOKE, REGRESSION},description ="Test for DELETE /pet/{petId} call to delete the created pet entity")
     public void Test_DeleteCreatedPet(){
         Response response = testService.deletePetsByID(modifiedTestPetBodyObject.getId());
 
