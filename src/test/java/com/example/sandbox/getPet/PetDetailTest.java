@@ -5,19 +5,20 @@ import com.example.sandbox.TestService;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import static com.example.sandbox.util.constans.Tags.REGRESSION;
 import static com.example.sandbox.util.constans.Tags.SMOKE;
 
-public class petDetailTest extends Common {
+public class PetDetailTest extends Common {
 
     TestService petTestService = new TestService();
     Long validPetId;
     Long invalidPetId;
     String notSupportedId;
 
-    @BeforeSuite
+    @BeforeTest()
     private void prepareTestData() {
         notSupportedId = "a22";
         validPetId = petTestService.getValidPetId();

@@ -10,6 +10,7 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.Collections;
@@ -26,7 +27,7 @@ public class PetLifeCycle extends Common {
     PetBody modifiedTestPetBodyObject;
     String modifiedTestPetBodyString;
 
-    @BeforeSuite(description = "description")
+    @BeforeTest(description = "description")
     private void Setup_prepareTestData() {
         testPetBodyObject = testService.buildPetBody(
                 TestData.NAME,
@@ -48,7 +49,7 @@ public class PetLifeCycle extends Common {
         modifiedTestPetBodyString = testService.getJsonStringFromObject(modifiedTestPetBodyObject);
     }
 
-    @Test(priority = 0, enabled = true,groups = {SMOKE, REGRESSION},description ="description")
+    @Test(priority = 0, enabled = true, groups = {SMOKE, REGRESSION},description ="description")
     public void Test_PostNewPetToStore(){
         Response response = postUrl(newPet, testPetBodyString);
 

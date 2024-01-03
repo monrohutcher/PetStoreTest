@@ -1,0 +1,15 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<suite name = "PetStoreS - Tests">
+    <test name = "REGRESSION">
+        <groups>
+            <run>
+                <include name = "regression" />
+            </run>
+        </groups>
+        <classes>
+            <class name = "com.example.sandbox.getPetList.PetListTest" />
+            <class name = "com.example.sandbox.getPet.PetDetailTest" />
+            <class name = "com.example.sandbox.businessProcesses.PetLifeCycle" />
+        </classes>
+    </test>
+</suite>

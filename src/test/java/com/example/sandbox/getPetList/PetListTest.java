@@ -12,7 +12,7 @@ import java.util.List;
 import static com.example.sandbox.util.constans.Tags.REGRESSION;
 import static com.example.sandbox.util.constans.Tags.SMOKE;
 
-public class petListTest extends Common {
+public class PetListTest extends Common {
 
     TestService petTestService = new TestService();
     String availableStatusName = "available";
