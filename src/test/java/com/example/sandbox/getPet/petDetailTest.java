@@ -1,28 +1,52 @@
 package com.example.sandbox.getPet;
 
 import com.example.sandbox.Common;
+import com.example.sandbox.TestService;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
-import java.util.Map;
-import java.util.TreeMap;
-
+import static com.example.sandbox.util.constans.Tags.REGRESSION;
 import static com.example.sandbox.util.constans.Tags.SMOKE;
 
 public class petDetailTest extends Common {
 
-    @Test(enabled = true,groups = {SMOKE},description ="description")
-    public void Test1(){
-        Map<String, String> queryParams = new TreeMap<>();
-        queryParams.put("status","available");
+    TestService petTestService = new TestService();
+    Long validPetId;
+    Long invalidPetId;
+    String notSupportedId;
 
-        Response  response = getUrl(findByStatus, queryParams);
-        Assert.assertEquals(response.getStatusCode(),200,"Invalid response code");
+    @BeforeSuite
+    private void prepareTestData() {
+        notSupportedId = "a22";
+        validPetId = petTestService.getValidPetId();
+        invalidPetId = petTestService.getInvalidPetId();
+    }
 
-        String id = response.jsonPath().get("[0].id").toString();
+    @Test(enabled = true,groups = {SMOKE, REGRESSION},description = "Test case for validating GET /pet/{petId} with valid id")
+    public void Test_GetPetByValidId() {
+        Response response = petTestService.getPetsByID(validPetId);
+        Assert.assertEquals(response.getStatusCode(),200, "Unexpected response code");
+        Assert.assertEquals(response.getBody().jsonPath().get("id"),validPetId, "Invalid pet ID returned");
+        Assert.assertEquals(response.getContentType(),"application/json", "Unexpected content type");
+    }
 
-        Response  response2 = getUrl(petById+id);
-        Assert.assertEquals(response2.getStatusCode(),200,"Invalid response code");
+    @Test(enabled = true,groups = {REGRESSION},description = "Test case for validating GET /pet/{petId} with invalid id")
+    public void Test_GetPetByInvalidId() {
+        Response response = petTestService.getPetsByID(invalidPetId);
+        Assert.assertEquals(response.getStatusCode(),404, "Unexpected response code");
+        Assert.assertEquals(response.getBody().jsonPath().get("code").toString(),"1", "Unexpected code in response body");
+        Assert.assertEquals(response.getBody().jsonPath().get("type"),"error", "Unexpected type in response body");
+        Assert.assertEquals(response.getBody().jsonPath().get("message"),"Pet not found", "Unexpected message in response body");
+        Assert.assertEquals(response.getContentType(),"application/json", "Unexpected content type");
+    }
+
+    @Test(enabled = true,groups = {REGRESSION},description = "Test case for validating GET /pet/{petId} with not supported id")
+    public void Test_GetPetWithNotSupportedId() {
+        Response response = petTestService.getPetsByID(notSupportedId);
+        Assert.assertEquals(response.getStatusCode(),404, "Unexpected response code");
+        Assert.assertEquals(response.getBody().jsonPath().get("type"),"unknown", "Unexpected type in response body");
+        Assert.assertEquals(response.getContentType(),"application/json", "Unexpected content type");
     }
 }
