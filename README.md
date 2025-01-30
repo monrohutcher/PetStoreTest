@@ -1,5 +1,7 @@
+![REST Assured](https://files.codingninjas.in/article_images/rest-assured-requestspecification-how-the-request-will-look-like-0-1666526253.webp) 
+
 # API Tester exercise
-This project contains an solution for API testing exercises with REST Assured in JAVA, using https://petstore.swagger.io/
+This project contains a solution for API testing exercises with Rest Assured in JAVA, using https://petstore.swagger.io/
 
 ## Task 1 (Success/Fail branch testing)
 Using the following project, write a test for each of the endpoints already implemented
